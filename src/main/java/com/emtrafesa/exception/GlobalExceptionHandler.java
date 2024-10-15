@@ -10,10 +10,10 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGlobalException(Exception ex) {
-        Map<String, String> error = new HashMap<>();
-        error.put("message", "Ocurrió un error inesperado.");
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+   // @ExceptionHandler(Exception.class)
+    //public ResponseEntity<?> handleGlobalException(Exception ex) {
+       // Map<String, String> error = new HashMap<>();
+       // error.put("message", "Ocurrió un error inesperado.");
+       // return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+   // }
 }

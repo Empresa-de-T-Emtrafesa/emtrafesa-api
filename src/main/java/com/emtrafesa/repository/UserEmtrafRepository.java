@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface UserEmtrafRepository extends JpaRepository<UserEmtraf, Long> {
     Optional<UserEmtraf> findByCorreo(String correo);
-    Optional<UserEmtraf> findByResetToken(String token);
+    Optional<UserEmtraf> findByResetToken(String resetToken);
 }

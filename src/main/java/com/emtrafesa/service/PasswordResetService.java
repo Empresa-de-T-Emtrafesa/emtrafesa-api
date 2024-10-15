@@ -6,6 +6,7 @@ import com.emtrafesa.repository.UserEmtrafRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +17,7 @@ public class PasswordResetService {
     private final UserEmtrafRepository userEmtrafRepository;
 
     @Autowired
-    public PasswordResetService(UserEmtrafRepository userEmtrafRepository) {
+    public PasswordResetService(UserEmtrafRepository userEmtrafRepository, EmailService emailService) {
         this.userEmtrafRepository = userEmtrafRepository;
     }
 
@@ -35,6 +36,7 @@ public class PasswordResetService {
             sendResetEmail(correo, token);
 
             return "Link de restablecimiento enviado a " + correo; // Incluye el token en la respuesta
+
         } else {
             return "El correo no está registrado."; // Manejo simple de error
         }
