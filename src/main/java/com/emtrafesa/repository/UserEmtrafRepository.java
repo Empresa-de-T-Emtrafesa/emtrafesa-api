@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface UserEmtrafRepository extends JpaRepository<UserEmtraf, Long> {
     Optional<UserEmtraf> findByCorreo(String correo);
     Optional<UserEmtraf> findByResetToken(String token);
+    Optional<UserEmtraf> findByCorreoAndContrasena(String correo, String contrasena);
 }

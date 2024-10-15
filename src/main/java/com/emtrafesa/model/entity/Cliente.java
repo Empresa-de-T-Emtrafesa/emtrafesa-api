@@ -29,14 +29,14 @@ public class Cliente {
     @Column(name = "tipo_documento")
     private TipoDocumento tipoDocumento;
 
-    @Column(name = "numero_dni", length = 10, nullable = false)
-    private String numeroDni;
+    @Column(name = "numero_documento", length = 10, nullable = false)
+    private String numeroDocumento;
 
     @Enumerated(EnumType.STRING)
     @Column(name ="telefono",length = 15, nullable = false)
     private TipoTelefono telefono;
 
     @Column(name = "numero_telefono", length = 10, nullable = false)
-    private String numerotelefono;
+    private String numeroTelefono;
 }
 
