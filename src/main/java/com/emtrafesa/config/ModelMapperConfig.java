@@ -1,7 +1,14 @@
 package com.emtrafesa.config;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class ModelMapperConfig {
-    public void hello(){
-        System.out.println("Hello mapper");
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }
