@@ -27,3 +27,4 @@ public class UserEmtraf {
     private TipoUsuario tipoUsuario;
 
 }
+
