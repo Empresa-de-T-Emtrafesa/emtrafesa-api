@@ -13,7 +13,7 @@ VALUES
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Cliente
-INSERT INTO cliente (nombre, apellidos, user_emtraf_id, tipo_documento, numero_dni, telefono, numero_telefono)
+INSERT INTO cliente (nombre, apellidos, user_emtraf_id, tipo_documento, numero_documento, telefono, numero_telefono)
 VALUES
     ('Juan', 'Pérez', 1, 'DNI', '12345678', 'CELULAR', '987654321'),
     ('Maria', 'Gonzales', 2, 'CARNET_DE_EXTRANJERIA', '87654321', 'CELULAR', '912345678')
@@ -61,7 +61,7 @@ VALUES
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Pasajero
-INSERT INTO pasajero (nombre, apellidos, sexo, tipo_documento, numero_dni, fecha_nacimiento)
+INSERT INTO pasajero (nombre, apellidos, sexo, tipo_documento, numero_documento, fecha_nacimiento)
 VALUES
     ('Pedro', 'Ramírez', 'MASCULINO', 'DNI', '11223344', '1990-04-15'),
     ('Laura', 'Martínez', 'FEMENINO', 'CARNET_DE_EXTRANJERIA', '22334455', '1985-07-22')
