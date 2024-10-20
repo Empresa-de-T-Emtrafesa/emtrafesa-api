@@ -38,5 +38,11 @@ public class Cliente {
 
     @Column(name = "numero_telefono", length = 10, nullable = false)
     private String numeroTelefono;
+
 }
+
+
+
+
+
 

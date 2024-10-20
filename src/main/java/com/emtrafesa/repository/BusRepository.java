@@ -1,5 +1,10 @@
 package com.emtrafesa.repository;
 
-public interface BusRepository {
-    void hello();
+import com.emtrafesa.model.entity.Bus;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface BusRepository extends JpaRepository<Bus, Long> {
+    Bus findByPlaca(String placa);
 }
