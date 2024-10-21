@@ -6,6 +6,7 @@ import com.emtrafesa.mapper.ClienteRegistroMapper;
 import com.emtrafesa.model.entity.Cliente;
 import com.emtrafesa.model.entity.UserEmtraf;
 import com.emtrafesa.model.enums.TipoDocumento;
+import com.emtrafesa.model.enums.TipoUsuario;
 import com.emtrafesa.repository.ClienteRegistroRepository;
 import com.emtrafesa.repository.UserEmtrafRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class ClienteRegistroService {
         UserEmtraf userEmtraf = new UserEmtraf();
         userEmtraf.setCorreo(clienteRegistroDTO.getCorreo());
         userEmtraf.setContrasena(clienteRegistroDTO.getContrasena());
+
+        userEmtraf.setTipoUsuario(TipoUsuario.CLIENTE);
         userEmtrafRepository.save(userEmtraf);
 
         Cliente cliente = clienteRegistroMapper.toEntity(clienteRegistroDTO, userEmtraf);

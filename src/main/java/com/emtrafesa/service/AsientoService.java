@@ -2,6 +2,7 @@ package com.emtrafesa.service;
 
 import com.emtrafesa.dto.AsientoDTO;
 import com.emtrafesa.dto.BusMapDTO;
+import com.emtrafesa.dto.BusRegistroDTO;
 import com.emtrafesa.exception.ResourceNotFoundException;
 import com.emtrafesa.mapper.AsientoMapper;
 import com.emtrafesa.model.entity.Bus;
