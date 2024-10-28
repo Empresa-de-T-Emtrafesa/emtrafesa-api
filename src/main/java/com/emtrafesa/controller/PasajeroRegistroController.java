@@ -19,16 +19,12 @@ public class PasajeroRegistroController {
 
     @PostMapping
     public ResponseEntity<String> registrarPasajero(@Valid @RequestBody PasajeroRegistroDTO pasajeroRegistroDTO) {
-        try {
             pasajeroRegistroService.registrarPasajero(pasajeroRegistroDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Pasajero registrado exitosamente.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @GetMapping
-    public List<Pasajero> listarClientes(){
+    public List<Pasajero> listarPasajeros(){
         return  pasajeroRegistroService.listaPasajero();
     }
 }

@@ -21,12 +21,8 @@ public class ClienteRegistroController {
 
     @PostMapping
     public ResponseEntity<String> registrarCliente(@Valid @RequestBody ClienteRegistroDTO clienteRegistroDTO) {
-        try{
             clienteRegistroService.registrarCliente(clienteRegistroDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente registrado exitosamente.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @GetMapping

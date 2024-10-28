@@ -15,6 +15,7 @@ public class BusMapper {
         bus.setServicio(busRegistroDTO.getTipoServicio());
         bus.setNumeroPisos(busRegistroDTO.getNumeroPisos());
         bus.setCantidadAsientosPorPiso(busRegistroDTO.getCantidadAsientosPorPiso());
+        bus.setEstadoBus(busRegistroDTO.getEstadoBus());
 
         return bus;
     }

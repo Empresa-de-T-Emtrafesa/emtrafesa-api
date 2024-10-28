@@ -20,14 +20,16 @@ public class BusController {
 
     @PostMapping
     public ResponseEntity<String> registrarBus(@Valid @RequestBody BusRegistroDTO busRegistroDTO){
-        try{
             busService.registrarBus(busRegistroDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("Bus registrado exitosamente.");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
     }
 
     @GetMapping
     public List<Bus> listarBus(){return busService.listarBus(); }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> modificarBus(@PathVariable Long id, @Valid @RequestBody BusRegistroDTO busRegistroDTO){
+        busService.modificarBus(id, busRegistroDTO);
+        return ResponseEntity.ok("Bus modificado exitosamente.");
+    }
 }
