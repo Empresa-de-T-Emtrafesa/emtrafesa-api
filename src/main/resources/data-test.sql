@@ -26,24 +26,24 @@ VALUES
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Bus
-INSERT INTO bus (placa, tipo_servicio, modelo, numero_pisos)
+INSERT INTO bus (placa, tipo_servicio, modelo, estado_bus, numero_pisos)
 VALUES
-    ('ABC-123', 'CAMA', 'Volvo 2020', 2),
-    ('XYZ-987', 'SEMICAMA', 'Mercedes Benz 2019', 2)
+    ('ABC-123', 'CAMA', 'Volvo 2020', 'HABILITADO', 2),
+    ('XYZ-987', 'SEMICAMA', 'Mercedes Benz 2019', 'INHABILITADO', 2)
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Ruta
-INSERT INTO ruta (origen, destino, tiene_escalas, empleado_id)
+INSERT INTO ruta (origen, destino, empleado_id)
 VALUES
-    ('Lima', 'Trujillo',  FALSE, 1),
-    ('Lima', 'Arequipa',  TRUE, 1)
+    ('Lima', 'Trujillo',   1),
+    ('Lima', 'Arequipa',   1)
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Itinerario
-INSERT INTO itinerario (ruta_id, bus_id, fecha_viaje, hora_salida, hora_llegada, empleado_id)
+INSERT INTO itinerario (ruta_id, bus_id, tiene_escalas, hora_salida, hora_llegada, empleado_id)
 VALUES
-    (1, 1, CURRENT_DATE, '08:00:00', '13:30:00', 1),
-    (2, 2, CURRENT_DATE, '21:00:00', '09:00:00', 1)
+    (1, 1, FALSE, '08:00:00', '13:30:00', 1),
+    (2, 2, TRUE, '21:00:00', '09:00:00', 1)
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Pasaje
@@ -80,13 +80,23 @@ VALUES
     (2, 2)
     ON CONFLICT DO NOTHING;
 
--- Insertando datos en la tabla precios_por_piso para el itinerario con id 1
-INSERT INTO precios_por_piso (itinerario_id, precio)
+-- Insertando datos en la tabla DisponibilidadItinerario para el itinerario con id 1
+INSERT INTO disponibilidad_itinerario (itinerario_id, fecha_viaje)
 VALUES
-    (1, 100.50), -- Precio para el primer piso del itinerario con id 1
-    (1, 120.75), -- Precio para el segundo piso del itinerario con id 1
-    (2, 80.50),  -- Precio para el primer piso del itinerario con id 2
-    (2, 95.00)   -- Precio para el segundo piso del itinerario con id 2
+    (1, '2024-11-24'), -- Fecha de disponibilidad para el itinerario con id 1
+    (1, '2024-11-25'),
+    (1, '2024-11-26'),
+    (2, '2024-11-24'), -- Fecha de disponibilidad para el itinerario con id 2
+    (2, '2024-11-25')
+    ON CONFLICT DO NOTHING;
+
+-- Insertando datos en la tabla precios_por_piso para el itinerario con id 1
+INSERT INTO precios_por_piso (itinerario_id, piso, precio)
+VALUES
+    (1, 1,100.50), -- Precio para el primer piso del itinerario con id 1
+    (1, 2,120.75), -- Precio para el segundo piso del itinerario con id 1
+    (2, 1,80.50),  -- Precio para el primer piso del itinerario con id 2
+    (2, 2, 95.00)   -- Precio para el segundo piso del itinerario con id 2
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla asientos_por_piso para el bus con id 1

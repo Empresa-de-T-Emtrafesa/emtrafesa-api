@@ -35,4 +35,10 @@ public class RutaController {
         Set<String> destinos = rutaService.obtenerDestinos();
         return ResponseEntity.ok(destinos);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarRuta(@PathVariable Long id) {
+        rutaService.eliminarRuta(id);
+        return ResponseEntity.ok("Ruta eliminada");
+    }
 }
