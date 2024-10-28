@@ -33,3 +33,5 @@ public class UserEmtraf {
     @Column(name = "token_expiration")
     private LocalDateTime tokenExpiration;
 
+}
+
