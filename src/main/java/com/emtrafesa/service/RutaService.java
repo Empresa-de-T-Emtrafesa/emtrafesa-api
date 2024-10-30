@@ -73,12 +73,11 @@ public class RutaService {
         }
         return destinos;
     }
-    
-    public void eliminarRuta(Long id){
-        Ruta ruta = rutaRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Ruta no encontrada"));
 
-        itinerarioRepository.deleteByRuta(ruta);
-        rutaRepository.delete(ruta);
+    public void eliminarRuta(Long id) {
+        Ruta ruta = rutaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
+        rutaRepository.delete(ruta);  // Esta eliminación cascada maneja los itinerarios.
     }
+
 }

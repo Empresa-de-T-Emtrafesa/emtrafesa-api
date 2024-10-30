@@ -1,11 +1,8 @@
 package com.emtrafesa.controller;
 
-import com.emtrafesa.dto.BusRegistroDTO;
 import com.emtrafesa.dto.ItinerarioDTO;
 import com.emtrafesa.model.entity.Itinerario;
-import com.emtrafesa.repository.ItinerarioRepository;
 import com.emtrafesa.service.ItinerarioService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +13,42 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/itinerarios")
+@RequestMapping("/itinerarios")
 @CrossOrigin(origins = "http://localhost:4200") // URL del front-end
 public class ItinerarioController {
 
     @Autowired
     private ItinerarioService itinerarioService;
 
+    // Obtener destinos disponibles para un origen específico
+    @GetMapping("/destinos")
+    public ResponseEntity<List<String>> obtenerDestinosDisponibles(@RequestParam String origen) {
+        List<String> destinos = itinerarioService.getDestinosDisponibles(origen);
+        return new ResponseEntity<>(destinos, HttpStatus.OK);
+    }
+
+    @GetMapping("/origenes")
+    public ResponseEntity<List<String>> obtenerOrigenesDisponibles(@RequestParam String destino) {
+        List<String> origenes = itinerarioService.getOrigenesDisponibles(destino);
+        return new ResponseEntity<>(origenes, HttpStatus.OK);
+    }
+
+    // Obtener fechas disponibles para origen y destino específicos
+    @GetMapping("/fechas")
+    public ResponseEntity<List<LocalDate>> obtenerFechasDisponibles(
+            @RequestParam String origen, @RequestParam String destino) {
+        List<LocalDate> fechas = itinerarioService.getFechasDisponibles(origen, destino);
+        return new ResponseEntity<>(fechas, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/filtrar")
+    public List<ItinerarioDTO> filtrarItinerarios(
+            @RequestParam String origen,
+            @RequestParam String destino,
+            @RequestParam LocalDate fechaViaje) {
+        return itinerarioService.filtrarItinerarios(origen, destino, fechaViaje);
+    }
 
 
     @PostMapping("/crear")

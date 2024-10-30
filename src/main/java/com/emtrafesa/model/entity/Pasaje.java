@@ -1,8 +1,10 @@
 package com.emtrafesa.model.entity;
 
+import com.emtrafesa.model.enums.MetodoPago;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,6 +32,10 @@ public class Pasaje {
 
     @JoinColumn(name = "estado")
     private String estado;
+
+    @OneToMany(mappedBy = "pasaje", cascade = CascadeType.ALL)
+    private List<PasajePasajero> pasajePasajeros; // Relación con los pasajeros y asientos
+
 
     @OneToOne
     @JoinColumn(name = "postergacion_id")

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Entity
-
+@Table(name = "itinerario")
 public class Itinerario {
 
     @Id
@@ -31,7 +31,7 @@ public class Itinerario {
     private List<PrecioPorPiso> preciosPorPiso;
 
     @OneToMany(mappedBy = "itinerario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DisponiblidadItinerario> disponibilidades;
+    private List<DisponibilidadItinerario> disponibilidades;
 
     @Column(name = "hora_salida")
     private LocalTime horaSalida;

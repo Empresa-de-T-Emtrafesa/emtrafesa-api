@@ -16,6 +16,7 @@ public class BusRegistroDTO {
     private String modelo;
     private TipoServicio tipoServicio;
     private EstadoBus estadoBus;
+    @NotNull(message = "El número de pisos es obligatorio")
     private Integer numeroPisos;
     private Map<Integer, Integer> cantidadAsientosPorPiso;
 }

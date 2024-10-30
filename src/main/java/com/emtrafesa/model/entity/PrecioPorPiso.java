@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "precio_por_piso")
+@Table(name = "precio_por_piso", uniqueConstraints = {@UniqueConstraint(columnNames = {"itinerario_id", "piso"})})
 public class PrecioPorPiso {
 
     @Id
@@ -22,6 +22,4 @@ public class PrecioPorPiso {
     @ManyToOne
     @JoinColumn(name = "itinerario_id")
     private Itinerario itinerario;
-
-
 }
