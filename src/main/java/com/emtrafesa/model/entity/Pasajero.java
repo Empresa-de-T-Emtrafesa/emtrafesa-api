@@ -32,7 +32,7 @@ public class Pasajero {
     @Column(name = "tipo_documento")
     private TipoDocumento tipoDocumento;
 
-    @Column(name = "numero_documento", length = 10, nullable = false)
+    @Column(name = "numero_documento", length = 20, nullable = false)
     private String numeroDocumento;
 
     @Column(name = "fecha_nacimiento", nullable = false)

@@ -1,6 +1,8 @@
 package com.emtrafesa.model.entity;
 
+import com.emtrafesa.model.enums.EstadoBus;
 import com.emtrafesa.model.enums.TipoServicio;
+import com.emtrafesa.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,8 +28,12 @@ public class Bus {
     @Column(name ="modelo")
     private String modelo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_bus", length = 20)
+    private EstadoBus estadoBus; //HABILITADO O INHABILITADO POR MANTENIMIENTO
+
     @Column(name ="numero_pisos")
-    private int numeroPisos;
+    private Integer numeroPisos;
 
     //se crean arreglos
     @ElementCollection

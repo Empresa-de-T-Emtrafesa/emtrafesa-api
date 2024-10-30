@@ -8,4 +8,8 @@ public class EmailService {
     public void sendPasswordResetEmail(String email, String token) {
         System.out.println("Sending password reset email to " + email + " with token " + token);
     }
+
+    public void sendWelcomeEmail(String email) {
+        System.out.println("Sending welcome email to " + email);
+    }
 }
