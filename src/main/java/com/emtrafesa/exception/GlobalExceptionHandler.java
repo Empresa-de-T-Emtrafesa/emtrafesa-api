@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,17 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex) {
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.FORBIDDEN.value(),
+                "No tienes permisos para acceder a este recurso",
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
+
 
     // Manejo de excepciones de IllegalArgumentException
     @ExceptionHandler(IllegalArgumentException.class)

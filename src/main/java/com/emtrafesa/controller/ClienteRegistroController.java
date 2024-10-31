@@ -21,8 +21,8 @@ public class ClienteRegistroController {
 
     @PostMapping
     public ResponseEntity<String> registrarCliente(@Valid @RequestBody ClienteRegistroDTO clienteRegistroDTO) {
-            clienteRegistroService.registrarCliente(clienteRegistroDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Cliente registrado exitosamente.");
+        clienteRegistroService.registrarCliente(clienteRegistroDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente registrado exitosamente.");
     }
 
     @GetMapping

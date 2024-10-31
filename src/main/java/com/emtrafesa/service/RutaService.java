@@ -5,6 +5,7 @@ import com.emtrafesa.model.entity.Empleado;
 import com.emtrafesa.model.entity.Ruta;
 import com.emtrafesa.repository.EmpleadoRepository;
 import com.emtrafesa.repository.ItinerarioRepository;
+import com.emtrafesa.repository.PasajeRepository;
 import com.emtrafesa.repository.RutaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class RutaService {
     private ItinerarioRepository itinerarioRepository;
     @Autowired
     private EmpleadoRepository empleadoRepository;
+    @Autowired
+    private PasajeRepository pasajeRepository;
 
     public Ruta crearRuta(RutaDTO rutaDTO) {
         // Validar que el origen y destino no sean nulos o vacíos
@@ -73,12 +76,20 @@ public class RutaService {
         }
         return destinos;
     }
-    
-    public void eliminarRuta(Long id){
-        Ruta ruta = rutaRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Ruta no encontrada"));
 
-        itinerarioRepository.deleteByRuta(ruta);
+    public void eliminarRuta(Long id) {
+        Ruta ruta = rutaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
+
+        // Verificar si alguno de los itinerarios asociados tiene compras
+        boolean tieneCompras = ruta.getItinerarios().stream()
+                .anyMatch(itinerario -> !pasajeRepository.findByItinerario(itinerario).isEmpty());
+
+        if (tieneCompras) {
+            throw new RuntimeException("No se puede eliminar la ruta porque tiene itinerarios con compras asociadas");
+        }
+
+        // Eliminar la ruta y sus itinerarios en cascada si no hay compras
         rutaRepository.delete(ruta);
     }
 }

@@ -10,6 +10,7 @@ import com.emtrafesa.model.enums.TipoUsuario;
 import com.emtrafesa.repository.ClienteRegistroRepository;
 import com.emtrafesa.repository.UserEmtrafRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public class ClienteRegistroService {
     @Autowired
     private ClienteRegistroRepository clienteRegistroRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public void registrarCliente(ClienteRegistroDTO clienteRegistroDTO) {
         validarCorreo(clienteRegistroDTO.getCorreo());
@@ -39,7 +42,10 @@ public class ClienteRegistroService {
 
         UserEmtraf userEmtraf = new UserEmtraf();
         userEmtraf.setCorreo(clienteRegistroDTO.getCorreo());
-        userEmtraf.setContrasena(clienteRegistroDTO.getContrasena());
+
+        // Encriptar la contraseña y verificar
+        String encodedPassword = passwordEncoder.encode(clienteRegistroDTO.getContrasena());
+        userEmtraf.setContrasena(encodedPassword);
 
         userEmtraf.setTipoUsuario(TipoUsuario.CLIENTE);
         userEmtrafRepository.save(userEmtraf);

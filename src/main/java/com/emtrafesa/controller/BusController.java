@@ -20,8 +20,8 @@ public class BusController {
 
     @PostMapping
     public ResponseEntity<String> registrarBus(@Valid @RequestBody BusRegistroDTO busRegistroDTO){
-            busService.registrarBus(busRegistroDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Bus registrado exitosamente.");
+        busService.registrarBus(busRegistroDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Bus registrado exitosamente.");
     }
 
     @GetMapping

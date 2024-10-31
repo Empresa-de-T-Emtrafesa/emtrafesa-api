@@ -4,6 +4,7 @@ import com.emtrafesa.dto.ItinerarioDTO;
 import com.emtrafesa.mapper.ItinerarioMapper;
 import com.emtrafesa.model.entity.*;
 import com.emtrafesa.repository.BusRepository;
+import com.emtrafesa.repository.DisponibilidadItinerarioRepository;
 import com.emtrafesa.repository.ItinerarioRepository;
 import com.emtrafesa.repository.RutaRepository;
 import com.emtrafesa.validation.BusValidation;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ItinerarioService {
@@ -36,8 +37,35 @@ public class ItinerarioService {
     @Autowired
     private BusService busService;
     @Autowired
-    private BusValidation busValidation;
+    private DisponibilidadItinerarioRepository disponibilidadRepository;
 
+    // Obtener destinos válidos para un origen específico
+    public List<String> getDestinosDisponibles(String origen) {
+        return itinerarioRepository.findDistinctDestinosByOrigen(origen);
+    }
+
+    public List<String> getOrigenesDisponibles(String destino){
+        return itinerarioRepository.findDistinctOrigenByDestino(destino);
+    }
+
+    // Obtener fechas válidas para un origen y destino específico
+    public List<LocalDate> getFechasDisponibles(String origen, String destino) {
+        return disponibilidadRepository.findFechasDisponiblesByOrigenDestino(origen, destino);
+    }
+
+    public List<ItinerarioDTO> filtrarItinerarios(String origen, String destino, LocalDate fechaViaje) {
+        List<Itinerario> itinerarios = itinerarioRepository.findByRutaAndFecha(origen, destino, fechaViaje);
+        return itinerarios.stream().map(itinerario -> {
+            ItinerarioDTO dto = itinerarioMapper.toDto(itinerario);
+
+            // Filtra solo la disponibilidad de la fecha específica en el DTO
+            dto.setDisponibilidades(dto.getDisponibilidades().stream()
+                    .filter(d -> d.getFechaViaje().equals(fechaViaje))
+                    .collect(Collectors.toList()));
+
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
     private void validarItinerario(ItinerarioDTO itinerarioDTO, Bus bus) {
         itinerarioValidation.validarFechas(itinerarioDTO);
@@ -48,12 +76,16 @@ public class ItinerarioService {
     }
 
     public Itinerario crearItinerario(ItinerarioDTO itinerarioDTO) {
+
         // Buscar la ruta y el bus
         Bus bus = busRepository.findById(itinerarioDTO.getBusId())
                 .orElseThrow(() -> new RuntimeException("Bus no encontrado"));
+
+        // Validar que el bus esté habilitado y que el itinerario sea válido
         busService.verificarEstadoBus(itinerarioDTO.getBusId());
         validarItinerario(itinerarioDTO, bus);
 
+        // Buscar la ruta asociada
         Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId())
                 .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
 
@@ -64,6 +96,7 @@ public class ItinerarioService {
 
         return itinerarioRepository.save(itinerario);
     }
+
 
     public Itinerario modificarItinerario (Long id, ItinerarioDTO itinerarioDTO) {
         Itinerario itinerarioExistente = itinerarioRepository.findById(id)
@@ -96,10 +129,10 @@ public class ItinerarioService {
         }
 
         // Actualizar las disponibilidades (fechas de viaje) si se proporcionan
-        if (itinerarioDTO.getDisponiblidades() != null) {
+        if (itinerarioDTO.getDisponibilidades() != null) {
             itinerarioExistente.getDisponibilidades().clear();
-            itinerarioDTO.getDisponiblidades().forEach(disponibilidadDTO -> {
-                DisponiblidadItinerario disponibilidad = new DisponiblidadItinerario();
+            itinerarioDTO.getDisponibilidades().forEach(disponibilidadDTO -> {
+                DisponibilidadItinerario disponibilidad = new DisponibilidadItinerario();
                 disponibilidad.setFechaViaje(disponibilidadDTO.getFechaViaje());
                 disponibilidad.setItinerario(itinerarioExistente);
                 itinerarioExistente.getDisponibilidades().add(disponibilidad);
@@ -107,9 +140,9 @@ public class ItinerarioService {
         }
 
         // Actualizar los precios por piso si se proporcionan
-        if (itinerarioDTO.getPreciosPorPiso() != null) {
+        if (itinerarioDTO.getPrecioPorPiso() != null) {
             itinerarioExistente.getPreciosPorPiso().clear();
-            itinerarioDTO.getPreciosPorPiso().forEach(precioDTO -> {
+            itinerarioDTO.getPrecioPorPiso().forEach(precioDTO -> {
                 PrecioPorPiso nuevoPrecio = new PrecioPorPiso();
                 nuevoPrecio.setPiso(precioDTO.getPiso());
                 nuevoPrecio.setPrecio(precioDTO.getPrecio());

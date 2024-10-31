@@ -10,15 +10,15 @@ import java.time.LocalDate;
 @Table(name = "disponibilidad_itinerario", indexes = {
         @Index(name = "idx_fecha_viaje", columnList = "fecha_viaje")
 })
-public class DisponiblidadItinerario {
+public class DisponibilidadItinerario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "itinerario_id")
-     private Itinerario itinerario;
+    private Itinerario itinerario;
 
-    @Column(name = "fecha_Viaje")
-     private LocalDate fechaViaje;
+    @Column(name = "fecha_viaje")
+    private LocalDate fechaViaje;
 }

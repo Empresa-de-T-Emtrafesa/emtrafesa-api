@@ -19,8 +19,8 @@ public class PasajeroRegistroController {
 
     @PostMapping
     public ResponseEntity<String> registrarPasajero(@Valid @RequestBody PasajeroRegistroDTO pasajeroRegistroDTO) {
-            pasajeroRegistroService.registrarPasajero(pasajeroRegistroDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Pasajero registrado exitosamente.");
+        pasajeroRegistroService.registrarPasajero(pasajeroRegistroDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Pasajero registrado exitosamente.");
     }
 
     @GetMapping

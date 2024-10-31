@@ -28,6 +28,3 @@ public class PasswordResetController {
         return ResponseEntity.ok(response);
     }
 }
-
-
-

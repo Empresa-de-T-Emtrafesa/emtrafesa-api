@@ -20,11 +20,11 @@ public class ItinerarioValidation {
 
     // Validar que las fechas del itinerario sean válidas
     public void validarFechas(ItinerarioDTO itinerarioDTO) {
-        if (itinerarioDTO.getDisponiblidades() == null || itinerarioDTO.getDisponiblidades().isEmpty()){
+        if (itinerarioDTO.getDisponibilidades() == null || itinerarioDTO.getDisponibilidades().isEmpty()){
             throw new IllegalArgumentException("El itinerario debe tener al menos una fecha seleccionada");
         }
         // Verificar que las fechas no sean anteriores al día actual
-        itinerarioDTO.getDisponiblidades().forEach(disponibilidad ->{
+        itinerarioDTO.getDisponibilidades().forEach(disponibilidad ->{
             if(disponibilidad.getFechaViaje().isBefore(LocalDate.now())){
                 throw new IllegalArgumentException("Se debe seleccionar la fecha actual o posteriores.");
             }
@@ -41,15 +41,19 @@ public class ItinerarioValidation {
 
     // Validar que los precios no sean negativos o cero
     public void validarPreciosPorPiso(ItinerarioDTO itinerarioDTO, Bus bus) {
+        // Verificar que el número de pisos no sea nulo
+        if (bus.getNumeroPisos() == null) {
+            throw new IllegalArgumentException("El número de pisos del bus no puede ser nulo.");
+        }
         // Verificar que el número de precios por piso sea igual al número de pisos del bus
-        if (itinerarioDTO.getPreciosPorPiso().size() != bus.getNumeroPisos()) {
+        if (itinerarioDTO.getPrecioPorPiso().size() != bus.getNumeroPisos()) {
             throw new IllegalArgumentException("Debe especificar un precio para cada piso del bus. Se esperaban "
                     + bus.getNumeroPisos() + " entradas, pero se recibieron "
-                    + itinerarioDTO.getPreciosPorPiso().size() + ".");
+                    + itinerarioDTO.getPrecioPorPiso().size() + ".");
         }
 
         // Validar cada entrada de precio por piso
-        itinerarioDTO.getPreciosPorPiso().forEach(precioDTO -> {
+        itinerarioDTO.getPrecioPorPiso().forEach(precioDTO -> {
             int piso = precioDTO.getPiso();
             double precio = precioDTO.getPrecio();
 
