@@ -1,28 +1,42 @@
 package com.emtrafesa.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "password_reset_tokens")
 public class PasswordResetToken {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @NotEmpty
+    @NotNull
+    @Size(min = 32, max = 64)
     @Column(nullable = false, unique = true)
     private String token;
 
-    @ManyToOne
+    @NotNull
+    @Column(nullable = false)
+    private LocalDateTime expiration;
+
+    @NotNull
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private UserEmtraf user;
 
-    @Column(nullable = false)
-    private LocalDateTime expiryDate;
+    public void setExpiration(int minutes) {
+        this.expiration = LocalDateTime.now().plusMinutes(minutes);
+    }
+
+    public boolean isExpired(){
+        return LocalDateTime.now().isAfter(expiration);
+    }
 }

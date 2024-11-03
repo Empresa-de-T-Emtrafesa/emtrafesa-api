@@ -8,7 +8,7 @@ VALUES
 -- Insertando datos en la tabla UserEmtraf
 INSERT INTO user_emtraf (correo, contrasena, tipo_usuario)
 VALUES
-    ('cliente1@emtrafesa.com', 'hashed_password1', 'CLIENTE'),
+    ('cleverjosue1@gmail.com', 'hashed_password1', 'CLIENTE'),
     ('empleado1@emtrafesa.com', 'hashed_password2', 'EMPLEADO')
     ON CONFLICT DO NOTHING;
 

@@ -25,7 +25,7 @@ public class ClienteRegistroService {
     private UserEmtrafRepository userEmtrafRepository;
 
     @Autowired
-    private EmailService emailService;
+    private CorreoService emailService;
 
     @Autowired
     private ClienteRegistroRepository clienteRegistroRepository;
