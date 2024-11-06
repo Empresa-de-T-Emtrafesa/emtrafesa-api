@@ -26,16 +26,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Desactiva CSRF solo para desarrollo
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v2/login", "/api/v2/cliente/**").permitAll() // Permitir /login y /cliente sin autenticación
-                        .anyRequest().permitAll() // Requiere autenticación para otros endpoints
-                )
-                .cors(withDefaults()); // Activa CORS
+            .csrf(csrf -> csrf.disable()) // Desactiva CSRF solo para desarrollo
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/v2/login", "/api/v2/cliente/**").permitAll() // Permitir /login y /cliente sin autenticación
+                .requestMatchers("/mail/**").permitAll() // Actualización: uso correcto de requestMatchers
+                .anyRequest().permitAll() // Permitir todas las demás solicitudes
+            )
+            .cors(withDefaults()); // Activa CORS
 
         return http.build();
     }
-
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -49,5 +49,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }
