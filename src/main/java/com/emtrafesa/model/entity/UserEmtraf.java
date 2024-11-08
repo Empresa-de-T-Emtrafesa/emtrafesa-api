@@ -27,5 +27,11 @@ public class UserEmtraf {
     @Column(name = "tipo_usuario", length = 10)
     private TipoUsuario tipoUsuario;
 
+    @Column(name = "reset_token", length = 255)
+    private String resetToken;
+
+    @Column(name = "token_expiration")
+    private LocalDateTime tokenExpiration;
+
 }
 
