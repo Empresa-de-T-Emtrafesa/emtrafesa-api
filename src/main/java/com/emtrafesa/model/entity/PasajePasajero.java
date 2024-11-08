@@ -10,7 +10,7 @@ import lombok.Data;
 public class PasajePasajero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_pasaje_pasajeo")
+    @Column(name = "id_pasaje_pasajero")
     private Long id;
 
     @ManyToOne
@@ -20,5 +20,9 @@ public class PasajePasajero {
     @ManyToOne
     @JoinColumn(name = "pasajero_id")
     private Pasajero pasajero;
+
+    @ManyToOne
+    @JoinColumn(name = "asiento_id", nullable = false)
+    private Asiento asiento;
 }
 

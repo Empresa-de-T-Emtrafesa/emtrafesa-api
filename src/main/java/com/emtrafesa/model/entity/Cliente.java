@@ -40,9 +40,3 @@ public class Cliente {
     private String numeroTelefono;
 
 }
-
-
-
-
-
-

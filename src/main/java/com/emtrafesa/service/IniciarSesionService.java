@@ -15,7 +15,7 @@ public class IniciarSesionService {
     @Autowired
     private  UserEmtrafRepository userEmtrafRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+   private PasswordEncoder passwordEncoder;
 
     public IniciarSesionRespuestaDTO login(IniciarSesionDTO logindto) {
         Optional<UserEmtraf> userEm = userEmtrafRepository.findByCorreo(logindto.getCorreo());

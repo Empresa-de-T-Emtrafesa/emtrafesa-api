@@ -24,10 +24,10 @@ public class Ruta {
     @Column(name = "destino", nullable = false)
     private String destino;
 
-    @Column(name = "tiene_escalas", nullable = false)
-    private Boolean tieneEscalas;
-
     @ManyToOne
     @JoinColumn(name = "empleado_id")
     private Empleado empleado;
+
+    @OneToMany(mappedBy = "ruta", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Itinerario> itinerarios;
 }

@@ -25,6 +25,6 @@ public class Asiento {
     private String estado; // Puede ser "OCUPADO", "RESERVADO", "DISPONIBLE"
 
     @ManyToOne
-    @JoinColumn(name = "bus_id", nullable = false)
+    @JoinColumn(name = "id_bus", nullable = false)
     private Bus bus;
 }
