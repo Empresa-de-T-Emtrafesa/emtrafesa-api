@@ -57,7 +57,7 @@ public class ClienteRegistroService {
         emailService.sendWelcomeEmail(clienteRegistroDTO.getCorreo());
     }
 
-    public List<Cliente> listaCliente(){
+    public List<Cliente> listaCliente() {
         return clienteRegistroRepository.findAll();
     }
 
@@ -86,11 +86,10 @@ public class ClienteRegistroService {
     }
 
     private void validarNumeroDocumento(TipoDocumento tipoDocumento, String numeroDocumento) {
-        if(tipoDocumento == TipoDocumento.DNI && numeroDocumento.length() !=8) {
+        if(tipoDocumento == TipoDocumento.DNI && numeroDocumento.length() != 8) {
             throw new IllegalArgumentException("El DNI debe tener 8 dígitos");
-        }else if(tipoDocumento == TipoDocumento.CARNET_DE_EXTRANJERIA && numeroDocumento.length() >20) {
+        } else if(tipoDocumento == TipoDocumento.CARNET_DE_EXTRANJERIA && numeroDocumento.length() > 20) {
             throw new IllegalArgumentException("El Carnet de Extranjería no puede exceder los 20 dígitos");
         }
     }
-
 }

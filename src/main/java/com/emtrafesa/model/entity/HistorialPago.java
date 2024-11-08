@@ -37,4 +37,3 @@ public class HistorialPago {
     @Column(name = "transaccion_id")
     private String transaccionId;
 }
-
