@@ -57,11 +57,10 @@ public class ClienteRegistroService {
         emailService.sendWelcomeEmail(clienteRegistroDTO.getCorreo());
     }
 
-    public List<Cliente> listaCliente(){
+    public List<Cliente> listaCliente() {
         return clienteRegistroRepository.findAll();
     }
 
-<<<<<<< HEAD
     private void validarTelefono(String numeroTelefono) {
         if(clienteRegistroRepository.findByNumeroTelefono(numeroTelefono).isPresent()) {
             throw new IllegalArgumentException("El número de teléfono ya está registrado");
@@ -87,44 +86,10 @@ public class ClienteRegistroService {
     }
 
     private void validarNumeroDocumento(TipoDocumento tipoDocumento, String numeroDocumento) {
-=======
-   private void validarTelefono(String numeroTelefono) {
-       if(clienteRegistroRepository.findByNumeroTelefono(numeroTelefono).isPresent()) {
-            throw new IllegalArgumentException("El número de teléfono ya está registrado");
-       }
-   }
-
-   private void validarNombreyApellidos(String nombre, String apellidos) {
-       if(clienteRegistroRepository.findByNombreAndApellidos(nombre, apellidos).isPresent()) {
-           throw new IllegalArgumentException("El nombre y apellido ya están registrados");
-       }
-   }
-
-   private void validarDocumento(String numeroDocumento) {
-       if(clienteRegistroRepository.findByNumeroDocumento(numeroDocumento).isPresent()) {
-           throw new IllegalArgumentException("El número de documento ya está registrado.");
-       }
-   }
-
-   private void validarCorreo(String correo) {
-       if(userEmtrafRepository.findByCorreo(correo).isPresent()) {
-           throw new IllegalArgumentException("El correo ya se encuentra en uso.");
-       }
-   }
-
-   private void validarNumeroDocumento(TipoDocumento tipoDocumento, String numeroDocumento) {
->>>>>>> 761746d0e71b5e47759d76ce8b019d7f8b0051c9
-        if(tipoDocumento == TipoDocumento.DNI && numeroDocumento.length() !=8) {
+        if(tipoDocumento == TipoDocumento.DNI && numeroDocumento.length() != 8) {
             throw new IllegalArgumentException("El DNI debe tener 8 dígitos");
-        }else if(tipoDocumento == TipoDocumento.CARNET_DE_EXTRANJERIA && numeroDocumento.length() >20) {
+        } else if(tipoDocumento == TipoDocumento.CARNET_DE_EXTRANJERIA && numeroDocumento.length() > 20) {
             throw new IllegalArgumentException("El Carnet de Extranjería no puede exceder los 20 dígitos");
         }
-<<<<<<< HEAD
     }
-
 }
-=======
-   }
-
-}
->>>>>>> 761746d0e71b5e47759d76ce8b019d7f8b0051c9
