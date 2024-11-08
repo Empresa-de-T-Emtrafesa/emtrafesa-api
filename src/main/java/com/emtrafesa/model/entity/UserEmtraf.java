@@ -17,7 +17,7 @@ public class UserEmtraf {
     @Column(name = "id_user_emtraf")
     private Long id;
 
-    @Column(name = "correo",length = 180, nullable = false, unique = true)
+    @Column(name = "correo", length = 180, nullable = false, unique = true)
     private String correo;
 
     @Column(name = "contrasena", length = 150, nullable = false)
@@ -27,9 +27,10 @@ public class UserEmtraf {
     @Column(name = "tipo_usuario", length = 10)
     private TipoUsuario tipoUsuario;
 
-     @Column(name = "reset_token", length = 255)
+    @Column(name = "reset_token", length = 255)
     private String resetToken;
 
     @Column(name = "token_expiration")
     private LocalDateTime tokenExpiration;
+}
 
