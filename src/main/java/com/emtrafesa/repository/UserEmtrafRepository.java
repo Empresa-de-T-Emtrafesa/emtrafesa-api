@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserEmtrafRepository extends JpaRepository<UserEmtraf, Long> {
     Optional<UserEmtraf> findByCorreo(String correo);
+
+    boolean existsByCorreo(String correo);
 }

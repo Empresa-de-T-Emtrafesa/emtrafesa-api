@@ -2,7 +2,6 @@ package com.emtrafesa.model.entity;
 
 import com.emtrafesa.model.enums.MetodoPago;
 
-
 import com.emtrafesa.model.enums.TipoServicio;
 import jakarta.persistence.*;
 import lombok.Data;
