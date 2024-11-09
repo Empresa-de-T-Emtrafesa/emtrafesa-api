@@ -12,7 +12,7 @@ public class AsientoController {
 
     @Autowired
     private AsientoService asientoService;
-
+    // ola
     @GetMapping("/bus/{busId}/mapa")
     public ResponseEntity<BusMapDTO> getMapaAsientos(@PathVariable Long busId) {
         BusMapDTO mapa = asientoService.getMapaAsientos(busId);
