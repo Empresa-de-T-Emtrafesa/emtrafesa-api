@@ -1,5 +1,13 @@
 package com.emtrafesa.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.emtrafesa.exception.ResourceNotFoundException;
 import com.emtrafesa.integration.dto.Mail;
@@ -9,15 +17,8 @@ import com.emtrafesa.model.entity.UserEmtraf;
 import com.emtrafesa.repository.PasswordResetTokenRepository;
 import com.emtrafesa.repository.UserEmtrafRepository;
 import com.emtrafesa.service.PasswordResetTokenService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public void createAndSendPasswordResetToken(String correo) throws Exception {
         UserEmtraf user = userRepository.findByCorreo(correo)
-                .orElseThrow(()-> new ResourceNotFoundException("Usuario con el email " + correo + " no se ha encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con el email " + correo + " no se ha encontrado"));
 
         PasswordResetToken passwordResetToken = new PasswordResetToken();
         passwordResetToken.setToken(UUID.randomUUID().toString());
@@ -44,8 +45,8 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 
         Map<String, Object> model = new HashMap<>();
 
-        // LUEGO CAMBIAR CON EL URL DE LA PAGINA DESPLEGADA
-        String resetUrl = "http://localhost:4200/#/forgot/" + passwordResetToken.getToken();
+        // Cambiar URL para redirigir al frontend en el endpoint correcto
+        String resetUrl = "http://localhost:4200/reset-password/" + passwordResetToken.getToken();
         model.put("user", user.getCorreo());
         model.put("resetUrl", resetUrl);
 
@@ -56,13 +57,13 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
                 mailFrom
         );
 
-        emailService.sendMail(mail,"email/password-reset-template");
+        emailService.sendMail(mail, "email/password-reset-template");
     }
 
     @Override
     public PasswordResetToken findByToken(String token) {
         return passwordResetTokenRepository.findByToken(token)
-                .orElseThrow(()-> new ResourceNotFoundException("Token de restablecimiento no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Token de restablecimiento no encontrado"));
     }
 
     @Override
@@ -73,15 +74,15 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public boolean isValidToken(String token) {
         return passwordResetTokenRepository.findByToken(token)
-                .filter(t->!t.isExpired())
+                .filter(t -> !t.isExpired())
                 .isPresent();
     }
 
     @Override
     public void resetPassword(String token, String newPassword) {
         PasswordResetToken resetToken = passwordResetTokenRepository.findByToken(token)
-                .filter(t->!t.isExpired())
-                .orElseThrow(()-> new ResourceNotFoundException("Token invalido o expirado"));
+                .filter(t -> !t.isExpired())
+                .orElseThrow(() -> new ResourceNotFoundException("Token invalido o expirado"));
 
         UserEmtraf user = resetToken.getUser();
         user.setContrasena(passwordEncoder.encode(newPassword));

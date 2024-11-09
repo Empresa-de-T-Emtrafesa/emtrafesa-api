@@ -9,7 +9,7 @@ VALUES
 INSERT INTO user_emtraf (correo, contrasena, tipo_usuario)
 VALUES
     ('cleverjosue1@gmail.com', 'hashed_password1', 'CLIENTE'),
-    ('empleado1@emtrafesa.com', 'hashed_password2', 'EMPLEADO')
+    ('caguilari1@upao.edu.pe', 'hashed_password2', 'EMPLEADO')
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Cliente
