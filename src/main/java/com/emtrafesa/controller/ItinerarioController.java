@@ -71,5 +71,5 @@ public class ItinerarioController {
     }
 
     @GetMapping
-    public List<Itinerario> listarItinerarios() {return itinerarioService.listarItinerario();}
+    public List<ItinerarioDTO> listarItinerarios() {return itinerarioService.listarItinerario();}
 }

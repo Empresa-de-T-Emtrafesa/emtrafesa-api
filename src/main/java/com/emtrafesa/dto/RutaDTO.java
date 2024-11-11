@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class RutaDTO {
+    private Long idRuta;
     @NotBlank(message = "El origen es obligatorio")
     private String origen;
 

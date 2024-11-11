@@ -71,22 +71,22 @@ public class ItinerarioService {
         itinerarioValidation.validarFechas(itinerarioDTO);
         itinerarioValidation.validarHoras(itinerarioDTO);
         itinerarioValidation.validarPreciosPorPiso(itinerarioDTO, bus);
-        itinerarioValidation.validarOrigenDestino(itinerarioDTO.getRutaId());
-        itinerarioValidation.disponiblidadBus(itinerarioDTO, itinerarioDTO.getBusId());
+        itinerarioValidation.validarOrigenDestino(itinerarioDTO.getRutaId().getIdRuta());
+        itinerarioValidation.disponiblidadBus(itinerarioDTO, itinerarioDTO.getBusId().getIdBus());
     }
 
     public Itinerario crearItinerario(ItinerarioDTO itinerarioDTO) {
 
         // Buscar la ruta y el bus
-        Bus bus = busRepository.findById(itinerarioDTO.getBusId())
+        Bus bus = busRepository.findById(itinerarioDTO.getBusId().getIdBus())
                 .orElseThrow(() -> new RuntimeException("Bus no encontrado"));
 
         // Validar que el bus esté habilitado y que el itinerario sea válido
-        busService.verificarEstadoBus(itinerarioDTO.getBusId());
+        busService.verificarEstadoBus(itinerarioDTO.getBusId().getIdBus());
         validarItinerario(itinerarioDTO, bus);
 
         // Buscar la ruta asociada
-        Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId())
+        Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId().getIdRuta())
                 .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
 
         // Mapear y guardar el itinerario
@@ -104,14 +104,14 @@ public class ItinerarioService {
 
         // Verificar si el bus está habilitado si se proporciona un nuevo bus
         if (itinerarioDTO.getBusId() != null) {
-            Bus bus = busRepository.findById(itinerarioDTO.getBusId())
+            Bus bus = busRepository.findById(itinerarioDTO.getBusId().getIdBus())
                     .orElseThrow(() -> new RuntimeException("Bus no encontrado"));
             busService.verificarEstadoBus(bus.getId());
             itinerarioExistente.setBus(bus);
             validarItinerario(itinerarioDTO,bus);
         }
         if (itinerarioDTO.getRutaId()!= null) {
-            Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId())
+            Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId().getIdRuta())
                     .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
             itinerarioExistente.setRuta(ruta);
         }
@@ -159,6 +159,10 @@ public class ItinerarioService {
         itinerarioRepository.delete(itinerario);
     }
 
-    public List <Itinerario> listarItinerario(){return itinerarioRepository.findAll();}
+    public List<ItinerarioDTO> listarItinerario() {
+        return itinerarioRepository.findAll().stream()
+                .map(itinerarioMapper::toDto)
+                .toList();
+    }
 
 }

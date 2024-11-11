@@ -12,6 +12,7 @@ import java.util.Map;
 
 @Data
 public class BusRegistroDTO {
+    private Long idBus;
     private String placa;
     private String modelo;
     private TipoServicio tipoServicio;

@@ -105,7 +105,8 @@ public class ItinerarioValidation {
 
     private boolean verificarDestinoOrigen(Itinerario itinerarioExistente, ItinerarioDTO itinerarioDTO) {
         String destinoAnterior = itinerarioExistente.getRuta().getDestino();
-        String origenNuevo = rutaRepository.findById(itinerarioDTO.getRutaId())
+        Long rutaId = itinerarioDTO.getRutaId().getIdRuta();
+        String origenNuevo = rutaRepository.findById(rutaId)
                 .orElseThrow(() -> new IllegalArgumentException("La ruta no existe."))
                 .getOrigen();
         return destinoAnterior.equals(origenNuevo);
