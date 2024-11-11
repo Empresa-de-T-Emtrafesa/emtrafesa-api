@@ -1,12 +1,11 @@
 package com.emtrafesa.controller;
 
 import com.emtrafesa.dto.ItinerarioDTO;
-import com.emtrafesa.model.entity.Itinerario;
+import com.emtrafesa.dto.ItinerarioListarDTO;
 import com.emtrafesa.service.ItinerarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -55,7 +54,6 @@ public class ItinerarioController {
     public ResponseEntity<String> crearItinerario(@RequestBody ItinerarioDTO itinerarioDTO) {
         itinerarioService.crearItinerario(itinerarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("Itinerario creado exitosamente");
-
     }
 
     @PutMapping("/{id}")
@@ -71,5 +69,5 @@ public class ItinerarioController {
     }
 
     @GetMapping
-    public List<ItinerarioDTO> listarItinerarios() {return itinerarioService.listarItinerario();}
+    public List<ItinerarioListarDTO> listarItinerarios() {return itinerarioService.listarItinerario();}
 }

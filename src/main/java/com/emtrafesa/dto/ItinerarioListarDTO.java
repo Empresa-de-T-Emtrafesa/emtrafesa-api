@@ -6,9 +6,9 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class ItinerarioDTO {
-    private Long rutaId;           // ID de la ruta
-    private Long busId;            // ID del bus
+public class ItinerarioListarDTO {
+    private RutaDTO rutaId;           // ID de la ruta
+    private BusRegistroDTO busId;            // ID del bus
     private Boolean tieneEscalas; // Puede ser nulo, si no es requerido
     private LocalTime horaSalida;   // Hora de salida
     private LocalTime horaLlegada;  // Hora de llegada

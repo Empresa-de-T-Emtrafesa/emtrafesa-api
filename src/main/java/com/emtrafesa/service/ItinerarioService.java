@@ -1,13 +1,14 @@
 package com.emtrafesa.service;
 
 import com.emtrafesa.dto.ItinerarioDTO;
+import com.emtrafesa.dto.ItinerarioListarDTO;
+import com.emtrafesa.mapper.ItinerarioListarMapper;
 import com.emtrafesa.mapper.ItinerarioMapper;
 import com.emtrafesa.model.entity.*;
 import com.emtrafesa.repository.BusRepository;
 import com.emtrafesa.repository.DisponibilidadItinerarioRepository;
 import com.emtrafesa.repository.ItinerarioRepository;
 import com.emtrafesa.repository.RutaRepository;
-import com.emtrafesa.validation.BusValidation;
 import com.emtrafesa.validation.ItinerarioValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class ItinerarioService {
 
     @Autowired
     private ItinerarioMapper itinerarioMapper;
+
+    @Autowired
+    private ItinerarioListarMapper itinerarioListarMapper;
 
     @Autowired
     private BusService busService;
@@ -71,22 +75,22 @@ public class ItinerarioService {
         itinerarioValidation.validarFechas(itinerarioDTO);
         itinerarioValidation.validarHoras(itinerarioDTO);
         itinerarioValidation.validarPreciosPorPiso(itinerarioDTO, bus);
-        itinerarioValidation.validarOrigenDestino(itinerarioDTO.getRutaId().getIdRuta());
-        itinerarioValidation.disponiblidadBus(itinerarioDTO, itinerarioDTO.getBusId().getIdBus());
+        itinerarioValidation.validarOrigenDestino(itinerarioDTO.getRutaId());
+        itinerarioValidation.disponiblidadBus(itinerarioDTO, itinerarioDTO.getBusId());
     }
 
     public Itinerario crearItinerario(ItinerarioDTO itinerarioDTO) {
 
         // Buscar la ruta y el bus
-        Bus bus = busRepository.findById(itinerarioDTO.getBusId().getIdBus())
+        Bus bus = busRepository.findById(itinerarioDTO.getBusId())
                 .orElseThrow(() -> new RuntimeException("Bus no encontrado"));
 
         // Validar que el bus esté habilitado y que el itinerario sea válido
-        busService.verificarEstadoBus(itinerarioDTO.getBusId().getIdBus());
+        busService.verificarEstadoBus(itinerarioDTO.getBusId());
         validarItinerario(itinerarioDTO, bus);
 
         // Buscar la ruta asociada
-        Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId().getIdRuta())
+        Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId())
                 .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
 
         // Mapear y guardar el itinerario
@@ -104,14 +108,14 @@ public class ItinerarioService {
 
         // Verificar si el bus está habilitado si se proporciona un nuevo bus
         if (itinerarioDTO.getBusId() != null) {
-            Bus bus = busRepository.findById(itinerarioDTO.getBusId().getIdBus())
+            Bus bus = busRepository.findById(itinerarioDTO.getBusId())
                     .orElseThrow(() -> new RuntimeException("Bus no encontrado"));
             busService.verificarEstadoBus(bus.getId());
             itinerarioExistente.setBus(bus);
             validarItinerario(itinerarioDTO,bus);
         }
         if (itinerarioDTO.getRutaId()!= null) {
-            Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId().getIdRuta())
+            Ruta ruta = rutaRepository.findById(itinerarioDTO.getRutaId())
                     .orElseThrow(() -> new RuntimeException("Ruta no encontrada"));
             itinerarioExistente.setRuta(ruta);
         }
@@ -159,9 +163,9 @@ public class ItinerarioService {
         itinerarioRepository.delete(itinerario);
     }
 
-    public List<ItinerarioDTO> listarItinerario() {
+    public List<ItinerarioListarDTO> listarItinerario() {
         return itinerarioRepository.findAll().stream()
-                .map(itinerarioMapper::toDto)
+                .map(itinerarioListarMapper::toDto)
                 .toList();
     }
 

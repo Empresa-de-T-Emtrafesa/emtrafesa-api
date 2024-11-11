@@ -1,6 +1,7 @@
 package com.emtrafesa.validation;
 
 import com.emtrafesa.dto.ItinerarioDTO;
+import com.emtrafesa.dto.ItinerarioListarDTO;
 import com.emtrafesa.model.entity.Bus;
 import com.emtrafesa.model.entity.Itinerario;
 import com.emtrafesa.repository.ItinerarioRepository;
@@ -105,8 +106,7 @@ public class ItinerarioValidation {
 
     private boolean verificarDestinoOrigen(Itinerario itinerarioExistente, ItinerarioDTO itinerarioDTO) {
         String destinoAnterior = itinerarioExistente.getRuta().getDestino();
-        Long rutaId = itinerarioDTO.getRutaId().getIdRuta();
-        String origenNuevo = rutaRepository.findById(rutaId)
+        String origenNuevo = rutaRepository.findById(itinerarioDTO.getRutaId())
                 .orElseThrow(() -> new IllegalArgumentException("La ruta no existe."))
                 .getOrigen();
         return destinoAnterior.equals(origenNuevo);
