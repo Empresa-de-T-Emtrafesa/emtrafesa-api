@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/auth")
 public class IniciarSesionController {
 
     private final IniciarSesionService iniciarSesionService;
@@ -20,7 +20,7 @@ public class IniciarSesionController {
         this.iniciarSesionService = iniciarSesionService;
     }
 
-    @PostMapping
+    @PostMapping("/login")
     public IniciarSesionRespuestaDTO login (@RequestBody IniciarSesionDTO iniciarSesionDTO) {
         return iniciarSesionService.login(iniciarSesionDTO);
     }

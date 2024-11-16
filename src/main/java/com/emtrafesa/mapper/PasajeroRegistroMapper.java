@@ -6,16 +6,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PasajeroRegistroMapper {
-    public Pasajero toEntity(PasajeroRegistroDTO pasajeroDTO){
+    public Pasajero toEntity(PasajeroRegistroDTO dto) {
+        Pasajero pasajero = new Pasajero();
+        pasajero.setNombre(dto.getNombre());
+        pasajero.setApellidos(dto.getApellidos());
+        pasajero.setTipoDocumento(dto.getTipoDocumento());
+        pasajero.setNumeroDocumento(dto.getNumeroDocumento());
+        pasajero.setSexo(dto.getSexo());
+        pasajero.setFechaNacimiento(dto.getFechaNacimiento());
+        return pasajero;
+    }
 
-    Pasajero pasajero = new Pasajero();
-    pasajero.setNombre(pasajeroDTO.getNombre());
-    pasajero.setApellidos(pasajeroDTO.getApellidos());
-    pasajero.setSexo(pasajeroDTO.getSexo());
-    pasajero.setTipoDocumento(pasajeroDTO.getTipoDocumento());
-    pasajero.setNumeroDocumento(pasajeroDTO.getNumeroDocumento());
-    pasajero.setFechaNacimiento(pasajeroDTO.getFechaNacimiento());
-
-    return pasajero;
+    public PasajeroRegistroDTO toDTO(Pasajero pasajero) {
+        PasajeroRegistroDTO dto = new PasajeroRegistroDTO();
+        dto.setId(pasajero.getId());
+        dto.setNombre(pasajero.getNombre());
+        dto.setApellidos(pasajero.getApellidos());
+        dto.setTipoDocumento(pasajero.getTipoDocumento());
+        dto.setNumeroDocumento(pasajero.getNumeroDocumento());
+        dto.setSexo(pasajero.getSexo());
+        dto.setFechaNacimiento(pasajero.getFechaNacimiento());
+        return dto;
     }
 }

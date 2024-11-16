@@ -19,12 +19,13 @@ public class PasajeroRegistroService {
     @Autowired
     private PasajeroRegistroMapper pasajeroRegistroMapper;
 
-    public void registrarPasajero(PasajeroRegistroDTO pasajeroRegistroDTO) {
+    public PasajeroRegistroDTO registrarPasajero(PasajeroRegistroDTO pasajeroRegistroDTO) {
         validarNombreyApellidos(pasajeroRegistroDTO.getNombre(), pasajeroRegistroDTO.getApellidos());
         validarDocumento(pasajeroRegistroDTO.getNumeroDocumento());
         validarNumeroDocumento(pasajeroRegistroDTO.getTipoDocumento(), pasajeroRegistroDTO.getNumeroDocumento());
         Pasajero pasajero = pasajeroRegistroMapper.toEntity(pasajeroRegistroDTO);
         pasajeroRegistroRepository.save(pasajero);
+        return pasajeroRegistroMapper.toDTO(pasajero);
     }
 
     public List<Pasajero> listaPasajero(){

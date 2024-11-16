@@ -7,6 +7,9 @@ import lombok.Data;
 @Builder
 @Data
 public class IniciarSesionRespuestaDTO {
-    private String mensaje;
+    private Long id;
+    private String nombre;
+    private String apellidos;
+    private String token;
     private TipoUsuario tipoUsuario;
 }

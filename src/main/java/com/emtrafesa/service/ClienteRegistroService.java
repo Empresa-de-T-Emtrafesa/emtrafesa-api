@@ -33,7 +33,7 @@ public class ClienteRegistroService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registrarCliente(ClienteRegistroDTO clienteRegistroDTO) {
+    public ClienteRegistroDTO registrarCliente(ClienteRegistroDTO clienteRegistroDTO) {
         validarCorreo(clienteRegistroDTO.getCorreo());
         validarNombreyApellidos(clienteRegistroDTO.getNombre(), clienteRegistroDTO.getApellidos());
         validarTelefono(clienteRegistroDTO.getNumeroTelefono());
@@ -42,19 +42,22 @@ public class ClienteRegistroService {
 
         UserEmtraf userEmtraf = new UserEmtraf();
         userEmtraf.setCorreo(clienteRegistroDTO.getCorreo());
+        userEmtraf.setNombre(clienteRegistroDTO.getNombre());
+        userEmtraf.setApellidos(clienteRegistroDTO.getApellidos());
 
         // Encriptar la contraseña y verificar
         String encodedPassword = passwordEncoder.encode(clienteRegistroDTO.getContrasena());
         userEmtraf.setContrasena(encodedPassword);
-
         userEmtraf.setTipoUsuario(TipoUsuario.CLIENTE);
+
         userEmtrafRepository.save(userEmtraf);
 
         Cliente cliente = clienteRegistroMapper.toEntity(clienteRegistroDTO, userEmtraf);
-
         clienteRegistroRepository.save(cliente);
 
         emailService.sendWelcomeEmail(clienteRegistroDTO.getCorreo());
+
+        return clienteRegistroMapper.toDto(cliente);
     }
 
     public List<Cliente> listaCliente() {

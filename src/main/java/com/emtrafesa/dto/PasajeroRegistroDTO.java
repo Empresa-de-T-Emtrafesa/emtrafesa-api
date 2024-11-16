@@ -11,6 +11,9 @@ import java.util.Date;
 
 @Data
 public class PasajeroRegistroDTO {
+
+    private Long id;
+
     @NotBlank(message = "Campo obligatorio")
     private String nombre;
 

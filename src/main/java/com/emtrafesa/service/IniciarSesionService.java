@@ -16,19 +16,29 @@ public class IniciarSesionService {
     private  UserEmtrafRepository userEmtrafRepository;
     @Autowired
    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     public IniciarSesionRespuestaDTO login(IniciarSesionDTO logindto) {
         Optional<UserEmtraf> userEm = userEmtrafRepository.findByCorreo(logindto.getCorreo());
 
         if (userEm.isPresent() && passwordEncoder.matches(logindto.getContrasena(), userEm.get().getContrasena())) {
             UserEmtraf userEmtraf = userEm.get();
+            String token = jwtTokenProvider.generateToken(
+                    userEmtraf.getId(),
+                    userEmtraf.getNombre(),
+                    userEmtraf.getApellidos(),
+                    userEmtraf.getTipoUsuario().name()
+            );
             return IniciarSesionRespuestaDTO.builder()
-                    .mensaje("Inicio sesión exitoso.")
+                    .id(userEmtraf.getId())
+                    .nombre(userEmtraf.getNombre())
+                    .apellidos(userEmtraf.getApellidos())
+                    .token(token)
                     .tipoUsuario(userEmtraf.getTipoUsuario())
                     .build();
         } else {
             return IniciarSesionRespuestaDTO.builder()
-                    .mensaje("Usuario no encontrado.")
                     .tipoUsuario(null)
                     .build();
         }

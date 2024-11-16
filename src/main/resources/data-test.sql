@@ -6,17 +6,22 @@ VALUES
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla UserEmtraf
-INSERT INTO user_emtraf (correo, contrasena, tipo_usuario)
+INSERT INTO user_emtraf (correo, contrasena, nombre, apellidos, tipo_usuario)
 VALUES
+<<<<<<< Updated upstream
     ('cleverjosue1@gmail.com', 'hashed_password1', 'CLIENTE'),
     ('caguilari1@upao.edu.pe', 'hashed_password2', 'EMPLEADO')
+=======
+    ('cliente1@emtrafesa.com', 'hashed_password1', 'Juan', 'Pérez', 'CLIENTE'),
+    ('empleado1@emtrafesa.com', 'hashed_password2','Maria', 'Gonzales', 'EMPLEADO')
+>>>>>>> Stashed changes
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Cliente
-INSERT INTO cliente (nombre, apellidos, user_emtraf_id, tipo_documento, numero_documento, telefono, numero_telefono)
+INSERT INTO cliente ( user_emtraf_id, tipo_documento, numero_documento, telefono, numero_telefono)
 VALUES
-    ('Juan', 'Pérez', 1, 'DNI', '12345678', 'CELULAR', '987654321'),
-    ('Maria', 'Gonzales', 2, 'CARNET_DE_EXTRANJERIA', '87654321', 'CELULAR', '912345678')
+    (1, 'DNI', '12345678', 'CELULAR', '987654321'),
+    (2, 'CARNET_DE_EXTRANJERIA', '87654321', 'CELULAR', '912345678')
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Empleado

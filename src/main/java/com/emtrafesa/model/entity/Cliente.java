@@ -15,12 +15,6 @@ public class Cliente {
     @Column(name ="id_cliente")
     private Long id;
 
-    @Column(name = "nombre", length = 100, nullable = false)
-    private String nombre;
-
-    @Column(name = "apellidos", length = 150, nullable = false)
-    private String apellidos;
-
     @OneToOne
     @JoinColumn(name = "user_emtraf_id", referencedColumnName = "id_user_emtraf")
     private UserEmtraf userEmtraf;
@@ -38,5 +32,4 @@ public class Cliente {
 
     @Column(name = "numero_telefono", length = 10, nullable = false)
     private String numeroTelefono;
-
 }

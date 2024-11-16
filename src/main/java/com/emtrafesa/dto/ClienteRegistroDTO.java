@@ -2,16 +2,21 @@ package com.emtrafesa.dto;
 
 import com.emtrafesa.model.enums.TipoDocumento;
 import com.emtrafesa.model.enums.TipoTelefono;
+import com.emtrafesa.model.enums.TipoUsuario;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
 public class ClienteRegistroDTO {
+    private Long id;
+
     @NotBlank(message = "Campo obligatorio")
     private String nombre;
 
     @NotBlank(message = "Campo obligatorio")
     private String apellidos;
+
+    private TipoUsuario tipoUsuario;
 
     @NotBlank(message = "Campo obligatorio")
     @Email(message = "El formato del correo es inválido")

@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pasajero")
+@RequestMapping("/register")
 public class PasajeroRegistroController {
 
     @Autowired
     private PasajeroRegistroService pasajeroRegistroService;
 
-    @PostMapping
-    public ResponseEntity<String> registrarPasajero(@Valid @RequestBody PasajeroRegistroDTO pasajeroRegistroDTO) {
-        pasajeroRegistroService.registrarPasajero(pasajeroRegistroDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Pasajero registrado exitosamente.");
+    @PostMapping("/pasajero")
+    public ResponseEntity<PasajeroRegistroDTO> registrarPasajero(@Valid @RequestBody PasajeroRegistroDTO pasajeroRegistroDTO) {
+        PasajeroRegistroDTO pasajeroGuardado = pasajeroRegistroService.registrarPasajero(pasajeroRegistroDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pasajeroGuardado);
     }
 
     @GetMapping

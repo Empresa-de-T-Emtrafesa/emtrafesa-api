@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.List;  
 
-@RequestMapping("/cliente")
+@RequestMapping("/register")
 @RestController
 public class ClienteRegistroController {
 
@@ -20,12 +20,12 @@ public class ClienteRegistroController {
     private ClienteRegistroService clienteRegistroService;
 
     @PostMapping
-    public ResponseEntity<String> registrarCliente(@Valid @RequestBody ClienteRegistroDTO clienteRegistroDTO) {
-        clienteRegistroService.registrarCliente(clienteRegistroDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Cliente registrado exitosamente.");
+    public ResponseEntity<ClienteRegistroDTO> registrarCliente(@Valid @RequestBody ClienteRegistroDTO clienteRegistroDTO) {
+        ClienteRegistroDTO clienteGuardado = clienteRegistroService.registrarCliente(clienteRegistroDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteGuardado);
     }
 
-    @GetMapping
+    @GetMapping("/cliente")
     public List<Cliente> listarClientes() {
         return clienteRegistroService.listaCliente();
     }

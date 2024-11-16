@@ -17,6 +17,12 @@ public class UserEmtraf {
     @Column(name = "id_user_emtraf")
     private Long id;
 
+    @Column(name = "nombre", length = 100, nullable = false)
+    private String nombre;
+
+    @Column(name = "apellidos", length = 150, nullable = false)
+    private String apellidos;
+
     @Column(name = "correo", length = 180, nullable = false, unique = true)
     private String correo;
 
@@ -32,6 +38,10 @@ public class UserEmtraf {
 
     @Column(name = "token_expiration")
     private LocalDateTime tokenExpiration;
+<<<<<<< Updated upstream
 
 }
 
+=======
+}
+>>>>>>> Stashed changes
