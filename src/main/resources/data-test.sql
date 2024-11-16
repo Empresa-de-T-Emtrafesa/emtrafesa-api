@@ -8,13 +8,10 @@ VALUES
 -- Insertando datos en la tabla UserEmtraf
 INSERT INTO user_emtraf (correo, contrasena, nombre, apellidos, tipo_usuario)
 VALUES
-<<<<<<< Updated upstream
-    ('cleverjosue1@gmail.com', 'hashed_password1', 'CLIENTE'),
-    ('caguilari1@upao.edu.pe', 'hashed_password2', 'EMPLEADO')
-=======
+    ('cleverjosue1@gmail.com', 'hashed_password1', 'Marta','Campos','CLIENTE'),
+    ('caguilari1@upao.edu.pe', 'hashed_password2', 'Ale','Anaconda','EMPLEADO'),
     ('cliente1@emtrafesa.com', 'hashed_password1', 'Juan', 'Pérez', 'CLIENTE'),
     ('empleado1@emtrafesa.com', 'hashed_password2','Maria', 'Gonzales', 'EMPLEADO')
->>>>>>> Stashed changes
     ON CONFLICT DO NOTHING;
 
 -- Insertando datos en la tabla Cliente

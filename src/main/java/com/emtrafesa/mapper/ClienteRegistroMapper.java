@@ -19,8 +19,6 @@ public class ClienteRegistroMapper {
         cliente.setNumeroDocumento(clienteDTO.getNumeroDocumento());
         return cliente;
     }
-<<<<<<< Updated upstream
-=======
 
     public ClienteRegistroDTO toDto(Cliente cliente) {
         ClienteRegistroDTO dto = new ClienteRegistroDTO();
@@ -35,5 +33,4 @@ public class ClienteRegistroMapper {
         dto.setNumeroTelefono(cliente.getNumeroTelefono());
         return dto;
     }
->>>>>>> Stashed changes
 }

@@ -31,8 +31,6 @@
     </properties>
 
     <dependencies>
-<<<<<<< Updated upstream
-=======
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -51,7 +49,6 @@
             <scope>runtime</scope>
         </dependency>
 
->>>>>>> Stashed changes
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -146,9 +143,5 @@
             </plugin>
         </plugins>
     </build>
-<<<<<<< Updated upstream
 
 </project>
-=======
-</project>
->>>>>>> Stashed changes
