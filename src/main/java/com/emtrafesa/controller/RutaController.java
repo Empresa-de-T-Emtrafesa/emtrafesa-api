@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/rutas")
+@RequestMapping("/rutas") // Ajustado para evitar duplicación con context-path
 @CrossOrigin(origins = "http://localhost:4200")
 public class RutaController {
 
@@ -25,14 +24,20 @@ public class RutaController {
     }
 
     @GetMapping("/origenes")
-    public ResponseEntity<Set<String>> obtenerOrígenes() {
-        Set<String> orígenes = rutaService.obtenerOrígenes();
-        return ResponseEntity.ok(orígenes);
+    public ResponseEntity<Set<String>> obtenerOrigenes() {
+        Set<String> origenes = rutaService.obtenerOrígenes();
+        return ResponseEntity.ok(origenes);
     }
 
     @GetMapping("/destinos")
     public ResponseEntity<Set<String>> obtenerDestinos() {
         Set<String> destinos = rutaService.obtenerDestinos();
+        return ResponseEntity.ok(destinos);
+    }
+
+    @GetMapping("/destinos/{origen}")
+    public ResponseEntity<Set<String>> obtenerDestinosPorOrigen(@PathVariable String origen) {
+        Set<String> destinos = rutaService.obtenerDestinosPorOrigen(origen);
         return ResponseEntity.ok(destinos);
     }
 

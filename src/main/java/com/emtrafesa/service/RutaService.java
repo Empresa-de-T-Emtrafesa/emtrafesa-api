@@ -51,7 +51,6 @@ public class RutaService {
         Ruta nuevaRuta = new Ruta();
         nuevaRuta.setOrigen(rutaDTO.getOrigen());
         nuevaRuta.setDestino(rutaDTO.getDestino());
-        nuevaRuta.setEmpleado(empleado);
 
         // Aquí puedes buscar el empleado si es necesario
         // Si deseas asignar un empleado a la ruta, deberás validar que exista
@@ -60,21 +59,18 @@ public class RutaService {
     }
 
     public Set<String> obtenerOrígenes() {
-        List<Ruta> rutas = rutaRepository.findAll();
-        Set<String> orígenes = new HashSet<>();
-        for (Ruta ruta : rutas) {
-            orígenes.add(ruta.getOrigen());
-        }
-        return orígenes;
+        List<String> origenes = rutaRepository.findDistinctOrigenes();
+        return new HashSet<>(origenes);
     }
 
     public Set<String> obtenerDestinos() {
-        List<Ruta> rutas = rutaRepository.findAll();
-        Set<String> destinos = new HashSet<>();
-        for (Ruta ruta : rutas) {
-            destinos.add(ruta.getDestino());
-        }
-        return destinos;
+        List<String> destinos = rutaRepository.findDistinctDestinos();
+        return new HashSet<>(destinos);
+    }
+
+    public Set<String> obtenerDestinosPorOrigen(String origen) {
+        List<String> destinos = rutaRepository.findDistinctDestinosByOrigen(origen);
+        return new HashSet<>(destinos);
     }
 
     public void eliminarRuta(Long id) {
